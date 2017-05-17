@@ -128,7 +128,8 @@ class PhpCs extends BaseTask implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    public function getCommand() {
+    public function getCommand()
+    {
 
         if (is_null($this->dir)) {
             $projectRoot = $this->getConfig()->get('digipolis.root.project', null);
