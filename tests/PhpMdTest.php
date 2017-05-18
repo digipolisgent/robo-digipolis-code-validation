@@ -87,7 +87,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
         $phpmd = $mocks['phpmd'];
         $phpmd->expects($this->once())->method('processFiles')
-            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
         $phpmd->expects($this->once())->method('hasViolations')
             ->willReturn(false);
@@ -114,7 +114,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
         $phpmd = $mocks['phpmd'];
         $phpmd->expects($this->once())->method('processFiles')
-            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
         $phpmd->expects($this->once())->method('hasViolations')
             ->willReturn(true);
@@ -141,7 +141,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
         $phpmd = $mocks['phpmd'];
         $phpmd->expects($this->once())->method('processFiles')
-            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
         $phpmd->expects($this->once())->method('hasViolations')
             ->willReturn(false);
@@ -170,7 +170,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
         $phpmd = $mocks['phpmd'];
         $phpmd->expects($this->once())->method('processFiles')
-            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
         $phpmd->expects($this->once())->method('hasViolations')
             ->willReturn(false);
@@ -202,7 +202,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
         $phpmd = $mocks['phpmd'];
         $phpmd->expects($this->once())->method('processFiles')
-            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
         $phpmd->expects($this->once())->method('hasViolations')
             ->willReturn(false);
