@@ -245,7 +245,7 @@ class PhpMd extends BaseTask
         }
         $phpmd->processFiles(
             $this->dir,
-            $this->rulesets,
+            implode(',', $this->rulesets),
             [$renderer],
             $ruleSetFactory
         );
