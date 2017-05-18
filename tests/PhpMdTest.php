@@ -103,4 +103,121 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $this->assertEquals('', $result->getMessage());
     }
 
+    public function testFailure() {
+        $path = 'path/to/code';
+        $allowedFileExtensions = ['inc', 'php', 'module'];
+        $ignorePatterns = ['ignoreme', 'ignoreme2'];
+        $format = 'xml';
+        $reportFile = 'path/to/report/file.xml';
+        $rulesets = ['codesize', 'unusedcode'];
+        $minimumPriority = 0;
+        $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
+        $phpmd = $mocks['phpmd'];
+        $phpmd->expects($this->once())->method('processFiles')
+            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->willReturn(null);
+        $phpmd->expects($this->once())->method('hasViolations')
+            ->willReturn(true);
+        $result = $this->taskPhpMd($path, $format, $allowedFileExtensions)
+            ->ignorePatterns($ignorePatterns)
+            ->reportFile($reportFile)
+            ->minimumPriority($minimumPriority)
+            ->rulesets($rulesets)
+            ->phpMdFactory(PHPMDFactoryMock::class)
+            ->run();
+
+        $this->assertEquals(1, $result->getExitCode());
+        $this->assertEquals('PHPMD found errors. The result was written to ' . $reportFile, $result->getMessage());
+    }
+
+    public function testRuleSetMethod() {
+        $path = 'path/to/code';
+        $allowedFileExtensions = ['inc', 'php', 'module'];
+        $ignorePatterns = ['ignoreme', 'ignoreme2'];
+        $format = 'xml';
+        $reportFile = 'path/to/report/file.xml';
+        $rulesets = ['codesize', 'unusedcode'];
+        $minimumPriority = 0;
+        $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
+        $phpmd = $mocks['phpmd'];
+        $phpmd->expects($this->once())->method('processFiles')
+            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->willReturn(null);
+        $phpmd->expects($this->once())->method('hasViolations')
+            ->willReturn(false);
+        $result = $this->taskPhpMd($path, $format, $allowedFileExtensions)
+            ->ignorePatterns($ignorePatterns)
+            ->reportFile($reportFile)
+            ->minimumPriority($minimumPriority)
+            // Test adding the rulesets one by one.
+            ->rulesets($rulesets[0])
+            ->rulesets($rulesets[1])
+            ->phpMdFactory(PHPMDFactoryMock::class)
+            ->run();
+
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertEquals('', $result->getMessage());
+    }
+
+    public function testAllowedFileExtensionsMethod() {
+        $path = 'path/to/code';
+        $allowedFileExtensions = ['inc', 'php', 'module'];
+        $ignorePatterns = ['ignoreme', 'ignoreme2'];
+        $format = 'xml';
+        $reportFile = 'path/to/report/file.xml';
+        $rulesets = ['codesize', 'unusedcode'];
+        $minimumPriority = 0;
+        $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
+        $phpmd = $mocks['phpmd'];
+        $phpmd->expects($this->once())->method('processFiles')
+            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->willReturn(null);
+        $phpmd->expects($this->once())->method('hasViolations')
+            ->willReturn(false);
+        $result = $this->taskPhpMd($path, $format, [])
+            ->ignorePatterns($ignorePatterns)
+            ->reportFile($reportFile)
+            ->minimumPriority($minimumPriority)
+
+            // Test adding the allowed file extensions one by one.
+            ->allowedFileExtensions($allowedFileExtensions[0])
+            ->allowedFileExtensions([$allowedFileExtensions[1], $allowedFileExtensions[2]])
+            ->rulesets($rulesets)
+            ->phpMdFactory(PHPMDFactoryMock::class)
+            ->run();
+
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertEquals('', $result->getMessage());
+    }
+
+    public function testIgnorePatternsMethod()
+    {
+        $path = 'path/to/code';
+        $allowedFileExtensions = ['inc', 'php', 'module'];
+        $ignorePatterns = ['ignoreme', 'ignoreme2'];
+        $format = 'xml';
+        $reportFile = 'path/to/report/file.xml';
+        $rulesets = ['codesize', 'unusedcode'];
+        $minimumPriority = 0;
+        $mocks = $this->mockPHPMDFactory($allowedFileExtensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
+        $phpmd = $mocks['phpmd'];
+        $phpmd->expects($this->once())->method('processFiles')
+            ->with($path, $rulesets, [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->willReturn(null);
+        $phpmd->expects($this->once())->method('hasViolations')
+            ->willReturn(false);
+        $result = $this->taskPhpMd($path, $format, $allowedFileExtensions)
+            // Test adding the ignored patterns one by one.
+            ->ignorePatterns($ignorePatterns[0])
+            ->ignorePatterns($ignorePatterns[1])
+            ->reportFile($reportFile)
+            ->minimumPriority($minimumPriority)
+            ->rulesets($rulesets)
+            ->phpMdFactory(PHPMDFactoryMock::class)
+            ->run();
+
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertEquals('', $result->getMessage());
+    }
+
 }

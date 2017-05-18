@@ -22,7 +22,7 @@ class PhpMd extends BaseTask
      *
      * @var array
      */
-    protected $rulesets = ['codesize', 'unusedcode'];
+    protected $rulesets = [];
 
     /**
      * The minimum priority for rules to load.
@@ -43,7 +43,7 @@ class PhpMd extends BaseTask
      *
      * @var array
      */
-    protected $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg'];
+    protected $ignorePatterns = [];
 
     /**
      * The format for the report.
@@ -126,7 +126,7 @@ class PhpMd extends BaseTask
         if (!is_array($ruleSetFileNames)) {
             $ruleSetFileNames = [$ruleSetFileNames];
         }
-        $this->rulesets = array_unique(array_merge($ruleSetFileNames));
+        $this->rulesets = array_unique(array_merge($this->rulesets, $ruleSetFileNames));
 
         return $this;
     }
@@ -144,7 +144,7 @@ class PhpMd extends BaseTask
         if (!is_array($fileExtensions)) {
             $fileExtensions = [$fileExtensions];
         }
-        $this->allowedFileExtensions = array_unique(array_merge($fileExtensions));
+        $this->allowedFileExtensions = array_unique(array_merge($this->allowedFileExtensions, $fileExtensions));
 
         return $this;
     }
@@ -163,7 +163,7 @@ class PhpMd extends BaseTask
         if (!is_array($ignorePatterns)) {
             $ignorePatterns = [$ignorePatterns];
         }
-        $this->ignorePatterns = array_unique(array_merge($ignorePatterns));
+        $this->ignorePatterns = array_unique(array_merge($this->ignorePatterns, $ignorePatterns));
 
         return $this;
     }
@@ -239,6 +239,10 @@ class PhpMd extends BaseTask
             $this->format,
             $this->reportFile
         );
+
+        if (empty($this->rulesets)) {
+            $this->rulesets = ['codesize', 'unusedcode'];
+        }
         $phpmd->processFiles(
             $this->dir,
             $this->rulesets,
