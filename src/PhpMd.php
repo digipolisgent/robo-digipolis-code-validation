@@ -36,7 +36,7 @@ class PhpMd extends BaseTask
      *
      * @var array
      */
-    protected $allowedFileExtensions;
+    protected $extensions;
 
     /**
      * List of exclude directory patterns.
@@ -73,14 +73,14 @@ class PhpMd extends BaseTask
      *   A php source code filename or directory.
      * @param string $format
      *   The format for the report.
-     * @param array $allowedFileExentsions
+     * @param array $extensions
      *   List of valid file extensions for analyzed files.
      */
-    public function __construct($dir = null, $format = 'xml', $allowedFileExentsions = ['php', 'inc'])
+    public function __construct($dir = null, $format = 'xml', $extensions = ['php', 'inc'])
     {
         $this->dir = is_null($dir) ? getcwd() : $dir;
         $this->format = $format;
-        $this->allowedFileExtensions = $allowedFileExentsions;
+        $this->extensions = $extensions;
     }
 
     /**
@@ -144,7 +144,7 @@ class PhpMd extends BaseTask
         if (!is_array($fileExtensions)) {
             $fileExtensions = [$fileExtensions];
         }
-        $this->allowedFileExtensions = array_unique(array_merge($this->allowedFileExtensions, $fileExtensions));
+        $this->extensions = array_unique(array_merge($this->extensions, $fileExtensions));
 
         return $this;
     }
@@ -213,7 +213,9 @@ class PhpMd extends BaseTask
     {
         if (!is_subclass_of($class, PHPMDFactoryInterface::class)) {
             throw new \InvalidArgumentException(sprintf(
-                'PHPMD Factory %s does not implement %s.', $class, PHPMDFactoryInterface::class
+                'PHPMD Factory %s does not implement %s.',
+                $class,
+                PHPMDFactoryInterface::class
             ));
         }
         $this->phpMdFactory = $class;
@@ -228,14 +230,15 @@ class PhpMd extends BaseTask
     {
         $phpmd = call_user_func(
             [$this->phpMdFactory, 'create'],
-            $this->allowedFileExtensions,
+            $this->extensions,
             $this->ignorePatterns
         );
         $ruleSetFactory = call_user_func(
             [$this->phpMdFactory, 'createRuleSetFactory'],
             $this->minimumPriority
         );
-        $renderer = call_user_func([$this->phpMdFactory, 'createRenderer'],
+        $renderer = call_user_func(
+            [$this->phpMdFactory, 'createRenderer'],
             $this->format,
             $this->reportFile
         );
@@ -257,5 +260,4 @@ class PhpMd extends BaseTask
             ? \Robo\Result::error($this, $error)
             : \Robo\Result::success($this);
     }
-
 }

@@ -14,9 +14,10 @@ class PHPMDFactory
     /**
      * {@inheritdoc}
      */
-    public static function create(array $allowedFileExtensions, array $ignorePatterns) {
+    public static function create(array $extensions, array $ignorePatterns)
+    {
         $phpmd = new PHPMD();
-        $phpmd->setFileExtensions($allowedFileExtensions);
+        $phpmd->setFileExtensions($extensions);
         $phpmd->setIgnorePattern($ignorePatterns);
         return $phpmd;
     }
@@ -24,7 +25,8 @@ class PHPMDFactory
     /**
      * {@inheritdoc}
      */
-    public static function createRenderer($format, $reportFile = null) {
+    public static function createRenderer($format, $reportFile = null)
+    {
         $renderer = new XMLRenderer();
         switch ($format) {
             case 'text':
@@ -46,7 +48,8 @@ class PHPMDFactory
     /**
      * {@inheritdoc}
      */
-    public static function createRuleSetFactory($minimumPriority) {
+    public static function createRuleSetFactory($minimumPriority)
+    {
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($minimumPriority);
         return $ruleSetFactory;

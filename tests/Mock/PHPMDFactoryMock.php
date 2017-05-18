@@ -7,7 +7,7 @@ use DigipolisGent\Robo\Task\CodeValidation\Factory\PHPMD\PHPMDFactoryInterface;
 class PHPMDFactoryMock implements PHPMDFactoryInterface
 {
 
-    protected static $allowedFileExtensions;
+    protected static $extensions;
     protected static $ignorePatterns;
     protected static $format;
     protected static $reportFile;
@@ -19,9 +19,9 @@ class PHPMDFactoryMock implements PHPMDFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public static function create($allowedFileExtensions, $ignorePatterns)
+    public static function create($extensions, $ignorePatterns)
     {
-        if ($allowedFileExtensions !== static::$allowedFileExtensions || $ignorePatterns !== static::$ignorePatterns) {
+        if ($extensions !== static::$extensions || $ignorePatterns !== static::$ignorePatterns) {
             throw new \Exception('Factory called with invalid arguments');
         }
         return static::$phpmd;
@@ -49,9 +49,9 @@ class PHPMDFactoryMock implements PHPMDFactoryInterface
         return static::$ruleSetFactory;
     }
 
-    public static function setAllowedFileExtensions($allowedFileExtensions)
+    public static function setAllowedFileExtensions($extensions)
     {
-        static::$allowedFileExtensions = $allowedFileExtensions;
+        static::$extensions = $extensions;
     }
 
     public static function setIgnorePatterns($ignorePatterns)

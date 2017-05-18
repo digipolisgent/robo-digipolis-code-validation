@@ -7,14 +7,14 @@ interface PHPMDFactoryInterface
     /**
      * Create a new PHPMD instance.
      *
-     * @param array $allowedFileExtensions
+     * @param array $extensions
      *   Extensions without leading dot.
      * @param array $ignorePatterns
      *   List of ignore patterns.
      *
      * @return \PHPMD\PHPMD
      */
-    public static function create($allowedFileExtensions, $ignorePatterns);
+    public static function create($extensions, $ignorePatterns);
 
     /**
      * Create a PHPMD renderer.
