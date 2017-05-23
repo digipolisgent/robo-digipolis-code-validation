@@ -22,7 +22,9 @@ class PHPMDFactoryMock implements PHPMDFactoryInterface
     public static function create($extensions, $ignorePatterns)
     {
         if ($extensions !== static::$extensions || $ignorePatterns !== static::$ignorePatterns) {
-            throw new \Exception('Factory called with invalid arguments');
+            throw new \Exception('Factory called with invalid arguments. Expected '
+                . print_r(static::$extensions, true) . ', ' . print_r(static::$ignorePatterns, true)
+                . ' got ' . print_r($extensions, true) . ', ' . print_r($ignorePatterns, true));
         }
         return static::$phpmd;
     }
@@ -33,7 +35,9 @@ class PHPMDFactoryMock implements PHPMDFactoryInterface
     public static function createRenderer($format, $reportFile = null)
     {
         if ($format !== static::$format || $reportFile !== static::$reportFile) {
-            throw new \Exception('Factory called with invalid arguments');
+            throw new \Exception('Factory called with invalid arguments. Expected '
+                . print_r(static::$format, true) . ', ' . print_r(static::$reportFile, true)
+                . ' got ' . print_r($format, true) . ', ' . print_r($reportFile, true));
         }
         return static::$renderer;
     }
@@ -44,7 +48,9 @@ class PHPMDFactoryMock implements PHPMDFactoryInterface
     public static function createRuleSetFactory($minimumPriority)
     {
         if ($minimumPriority !== static::$minimumPriority) {
-            throw new \Exception('Factory called with invalid arguments');
+            throw new \Exception('Factory called with invalid arguments. Expected '
+                . print_r(static::$minimumPriority, true)
+                . ' got ' . print_r($minimumPriority, true));
         }
         return static::$ruleSetFactory;
     }

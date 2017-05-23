@@ -11,7 +11,7 @@ trait PhpMd
         $opts = [
             'dir' => null,
             'format' => 'xml',
-            'extensions' => 'inc,php',
+            'extensions' => null,
             'ignore' => null,
             'minimum-priority' => null,
             'report-file' => null,

@@ -19,7 +19,7 @@ trait PhpMdTrait
      * @return \DigipolisGent\Robo\Task\CodeValidation\PhpMd
      *   The phpmd task.
      */
-    protected function taskPhpMd($dir = null, $format = 'xml', $extensions = ['php', 'inc'])
+    protected function taskPhpMd($dir = null, $format = 'xml', $extensions = [])
     {
         return $this->task(PhpMd::class, $dir, $format, $extensions);
     }

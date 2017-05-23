@@ -76,7 +76,7 @@ class PhpMd extends BaseTask
      * @param array $extensions
      *   List of valid file extensions for analyzed files.
      */
-    public function __construct($dir = null, $format = 'xml', $extensions = ['php', 'inc'])
+    public function __construct($dir = null, $format = 'xml', $extensions = [])
     {
         $this->dir = is_null($dir) ? getcwd() : $dir;
         $this->format = $format;
@@ -228,6 +228,9 @@ class PhpMd extends BaseTask
      */
     public function run()
     {
+        if (empty($this->extensions)) {
+            $this->extensions = ['php', 'inc'];
+        }
         $phpmd = call_user_func(
             [$this->phpMdFactory, 'create'],
             $this->extensions,
