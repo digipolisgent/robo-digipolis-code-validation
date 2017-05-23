@@ -55,3 +55,38 @@ The report type to generate (e.g. 'checkstyle' or 'json').
 ##### --report-file
 
 The file to output the generated report in.
+
+### digipolis:php-md
+
+`vendor/bin/robo digipolis:php-md [OPTIONS]`
+
+#### Options
+
+##### --dir
+
+The directory containing the code to check.
+
+##### --format
+
+The format to output the code in (xml, html or text).
+
+##### --extensions
+
+The file extensions of the files to check.
+
+##### --ignore
+
+Comma separated list of files/directories to ignore.
+
+##### --minimum-priority
+
+The rule priority threshold; rules with lower priority than this will not be
+used.
+
+##### --report-file
+
+The file to output the generated report in.
+
+##### --rulesets
+
+A comma-separated string of ruleset filenames.
