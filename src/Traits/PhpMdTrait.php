@@ -13,14 +13,14 @@ trait PhpMdTrait
      *   A php source code filename or directory.
      * @param string $format
      *   The format for the report.
-     * @param array $allowedFileExentsions
+     * @param array $extensions
      *   List of valid file extensions for analyzed files.
      *
      * @return \DigipolisGent\Robo\Task\CodeValidation\PhpMd
      *   The phpmd task.
      */
-    protected function taskPhpMd($dir = null, $format = 'xml', $allowedFileExentsions = ['php', 'inc'])
+    protected function taskPhpMd($dir = null, $format = 'xml', $extensions = ['php', 'inc'])
     {
-        return $this->task(PhpMd::class, $dir, $format, $allowedFileExentsions);
+        return $this->task(PhpMd::class, $dir, $format, $extensions);
     }
 }
