@@ -220,4 +220,35 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $this->assertEquals('', $result->getMessage());
     }
 
+    public function testEmptyConstructorWithSetterMethods()
+    {
+        $path = 'path/to/code';
+        $extensions = ['inc', 'php', 'module'];
+        $ignorePatterns = ['ignoreme'];
+        $format = 'xml';
+        $reportFile = 'path/to/report/file.xml';
+        $rulesets = ['codesize', 'unusedcode'];
+        $minimumPriority = 0;
+        $mocks = $this->mockPHPMDFactory($extensions, $ignorePatterns, $format, $reportFile, $minimumPriority);
+        $phpmd = $mocks['phpmd'];
+        $phpmd->expects($this->once())->method('processFiles')
+            ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
+            ->willReturn(null);
+        $phpmd->expects($this->once())->method('hasViolations')
+            ->willReturn(false);
+        $result = $this->taskPhpMd()
+            ->dir($path)
+            ->format($format)
+            ->allowedFileExtensions($extensions)
+            ->ignorePatterns($ignorePatterns)
+            ->reportFile($reportFile)
+            ->minimumPriority($minimumPriority)
+            ->rulesets($rulesets)
+            ->phpMdFactory(PHPMDFactoryMock::class)
+            ->run();
+
+        $this->assertEquals(0, $result->getExitCode());
+        $this->assertEquals('', $result->getMessage());
+    }
+
 }
