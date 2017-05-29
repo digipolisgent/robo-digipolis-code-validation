@@ -119,6 +119,8 @@ class PhpCs extends BaseTask implements CommandInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function run()
     {
