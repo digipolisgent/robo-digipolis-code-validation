@@ -27,6 +27,8 @@ class PhpCsTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
     {
         $container = Robo::createDefaultContainer(null, new NullOutput());
         $this->setContainer($container);
+        $this->setConfig(Robo::config());
+        $this->getConfig()->set('digipolis.root.project', null);
     }
 
     /**
