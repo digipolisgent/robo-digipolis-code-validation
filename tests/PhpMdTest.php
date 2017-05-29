@@ -251,4 +251,8 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $this->assertEquals('', $result->getMessage());
     }
 
+    public function testInvalidFactory() {
+        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->taskPhpMd()->phpMdFactory('\stdClass');
+    }
 }
