@@ -1,6 +1,6 @@
 <?php
 
-namespace DigipolisGent\Robo\Task\Package;
+namespace DigipolisGent\Robo\Task\CodeValidation;
 
 use Robo\Task\Base\ParallelExec;
 use Symfony\Component\Process\Process;
