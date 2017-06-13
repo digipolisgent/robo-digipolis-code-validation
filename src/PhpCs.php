@@ -51,6 +51,13 @@ class PhpCs extends BaseTask implements CommandInterface
      */
     protected $ignore = [];
 
+    /**
+     * Whether or not to return an exit code > 0 when PHPCS found violations.
+     *
+     * @var bool
+     */
+    protected $failOnViolations = true;
+
 
     /**
      * Create a new PhpCs task.
@@ -118,11 +125,31 @@ class PhpCs extends BaseTask implements CommandInterface
     }
 
     /**
+     * Set whether or not to fail on violations.
+     *
+     * @param bool $failOnViolations
+     *   Whether or not to fail on violations.
+     *
+     * @return $this
+     */
+    public function failOnViolations($failOnViolations = true)
+    {
+        $this->failOnViolations = $failOnViolations;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     public function run()
     {
-        return $this->executeCommand($this->getCommand());
+        $result = $this->executeCommand($this->getCommand());
+        return !$result->wasSuccessful() && $this->failOnViolations
+            ? $result
+            : \Robo\Result::success($this, $result->getMessage(), $result->getData());
     }
 
     /**

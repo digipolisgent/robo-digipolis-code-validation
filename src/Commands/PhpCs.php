@@ -7,6 +7,9 @@ trait PhpCs
 
     use \DigipolisGent\Robo\Task\CodeValidation\Traits\PhpCsTrait;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function digipolisPhpCs(
         $opts = [
             'dir' => null,

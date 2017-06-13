@@ -7,6 +7,9 @@ trait PhpMd
 
     use \DigipolisGent\Robo\Task\CodeValidation\Traits\PhpMdTrait;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function digipolisPhpMd(
         $opts = [
             'dir' => null,

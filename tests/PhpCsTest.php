@@ -6,17 +6,19 @@ use DigipolisGent\Robo\Task\CodeValidation\PhpCs;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Robo\Common\CommandArguments;
+use Robo\Contract\ConfigAwareInterface;
 use Robo\Robo;
 use Robo\TaskAccessor;
 use Symfony\Component\Console\Output\NullOutput;
 
-class PhpCsTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface
+class PhpCsTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInterface, ConfigAwareInterface
 {
 
     use \DigipolisGent\Robo\Task\CodeValidation\loadTasks;
     use TaskAccessor;
     use ContainerAwareTrait;
     use CommandArguments;
+    use \Robo\Common\ConfigAwareTrait;
 
     /**
      * Set up the Robo container so that we can create tasks in our tests.
@@ -25,6 +27,8 @@ class PhpCsTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
     {
         $container = Robo::createDefaultContainer(null, new NullOutput());
         $this->setContainer($container);
+        $this->setConfig(Robo::config());
+        $this->getConfig()->set('digipolis.root.project', null);
     }
 
     /**
@@ -67,6 +71,11 @@ class PhpCsTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
     public function testDirOption()
     {
         $command = $this->getPhpCsExecutable() . ' --extensions=php,inc --standard=PSR1,PSR2 --report=checkstyle /path/to/dir';
+        $this->assertEquals(
+            $command,
+            $this->taskPhpCs('/path/to/dir')->getCommand()
+        );
+        $this->getConfig()->set('digipolis.root.project', '/path/to/dir');
         $this->assertEquals(
             $command,
             $this->taskPhpCs('/path/to/dir')->getCommand()
