@@ -89,7 +89,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd($path, $format, $extensions)
             ->ignorePatterns($ignorePatterns)
@@ -143,7 +143,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd($path, $format, $extensions)
             ->ignorePatterns($ignorePatterns)
@@ -172,7 +172,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd($path, $format, [])
             ->ignorePatterns($ignorePatterns)
@@ -204,7 +204,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd($path, $format, $extensions)
             // Test adding the ignored patterns one by one.
@@ -234,7 +234,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, implode(',', $rulesets), [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd()
             ->dir($path)
@@ -265,7 +265,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase implements ContainerAwareInt
         $phpmd->expects($this->once())->method('processFiles')
             ->with($path, 'codesize,unusedcode', [$mocks['renderer']], $mocks['ruleSetFactory'])
             ->willReturn(null);
-        $phpmd->expects($this->once())->method('hasViolations')
+        $phpmd->expects($this->exactly(2))->method('hasViolations')
             ->willReturn(false);
         $result = $this->taskPhpMd()
             ->dir($path)
