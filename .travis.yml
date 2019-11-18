@@ -1,17 +1,21 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=244bf80f943e25a4869ff0f698f01cbefc74951481ffd3745c81393f4544f8a9
 language: php
 php:
   - 7.1
   - 7.0
   - 5.6
   - 5.5
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 install:
-  - composer clearcache
   - composer self-update
-  - composer install --dev -vvv
+  - composer install --dev
 script:
   - vendor/bin/robo test:coverage-codeclimate
-addons:
-  code_climate:
-    repo_token: c06dc54a0fdb1086cadf5cb92c8ed03ea3482e08ea081a887e93a7a32cc649cd
-after_success:
-  - vendor/bin/test-reporter
+after_script:
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  
