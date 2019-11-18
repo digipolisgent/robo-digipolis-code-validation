@@ -5,8 +5,7 @@
     "minimum-stability": "RC",
     "prefer-stable": true,
     "require": {
-        "consolidation/robo": "~1.0",
-        "php": ">=5.5.0",
+        "consolidation/robo": "^1.0|^2.0",
         "squizlabs/php_codesniffer": "*",
         "phpmd/phpmd": "^2.6"
     },
